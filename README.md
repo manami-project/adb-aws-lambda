@@ -1,6 +1,8 @@
 # adb-aws-lambda
 Stands for _anime database AWS lambda_. It lets you create an anime meta data REST service using an AWS lambda based on the [anime-offline-database](https://github.com/manami-project/anime-offline-database) with just one command.
 
+**Check out the [OpenAPI specification](https://github.com/manami-project/adb-aws-lambda/blob/master/openapi.yaml).**
+
 # Prerequisite
 * AWS account
 * node.js installed

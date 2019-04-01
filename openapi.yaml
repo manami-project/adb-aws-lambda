@@ -1,0 +1,132 @@
+openapi: "3.0.2"
+info:
+  title: adb-aws-lambda
+  description: |
+    This service lets you retrieve anime meta data.
+  version: 1.0.0
+  license:
+    name: "AGPL-3.0"
+    url: "https://github.com/manami-project/adb-aws-lambda/blob/master/LICENSE"
+paths:
+  "/{metaDataProvider}/{id}":
+    get:
+      summary: Retrieve anime by meta data provider and its id.
+      description: |
+        This endpoint lets you retrieve the meta data of an anime by a specific meta data provider and the anime's id at the meta data provider.
+        Currently known meta data providers are
+          |enum value|meta data provider|
+          |----|----|
+          |mal|myanimelist.net|
+          |kitsu|kitsu.io|
+          |anilist|anilist.co|
+          |anidb|anidb.net|
+          |ann|animenewsnetwork.com|
+      parameters: 
+        - name: metaDataProvider
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: 
+              - mal
+              - kitsu
+              - anilist
+              - anidb
+              - ann
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+            format: int32
+      responses:
+        '200':
+          description: |-
+            Anime data successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Anime"
+        '404':
+          description: |
+            No anime for the combination of meta data provider and id.
+components:
+  schemas:
+    Anime:
+      type: object
+      required: 
+        - sources
+        - title
+        - type
+        - episodes
+        - picture
+        - thumbnail
+        - relations
+        - synonyms
+      properties:
+        sources:
+          type: array
+          items:
+            type: string
+          example: [
+                    "http://anilist.co/anime/1535",
+                    "https://anidb.net/a4563",
+                    "https://animenewsnetwork.com/encyclopedia/anime.php?id=6592",
+                    "https://kitsu.io/anime/1376",
+                    "https://myanimelist.net/anime/1535"
+                   ]
+        title:
+          description: "The anime's primary title."
+          type: string
+          example: "Death Note"
+        type:
+          $ref: "#/components/schemas/AnimeType"
+        episodes:
+          type: number
+          format: int32
+          example: 37
+        picture:
+          type: string
+          example: "https://cdn.myanimelist.net/images/anime/9/9453.jpg"
+        thumbnail:
+          type: string
+          example: "https://cdn.myanimelist.net/images/anime/9/9453t.jpg"
+        relations:
+          type: array
+          items:
+            type: string
+          example: [
+                    "http://anilist.co/anime/2994",
+                    "https://anidb.net/a8146",
+                    "https://anidb.net/a8147",
+                    "https://myanimelist.net/anime/2994"
+                   ]
+        synonyms:
+          type: array
+          items:
+            type: string
+          example: [
+                    "Caderno da Morte",
+                    "DEATH NOTE",
+                    "DN",
+                    "Death Note",
+                    "Death Note - A hal\u00e1llista",
+                    "Death Note - Carnetul mor\u0163ii",
+                    "Death Note - Z\u00e1pisn\u00edk smrti",
+                    "Mirties U\u017era\u0161ai",
+                    "Notatnik \u015bmierci",
+                    "Notes \u015amierci",
+                    "Quaderno della Morte",
+                    "Sveska Smrti",
+                    "\u00d6l\u00fcm Defteri",
+                    "\u03a4\u03b5\u03c4\u03c1\u03ac\u03b4\u03b9\u03bf \u0398\u03b1\u03bd\u03ac\u03c4\u03bf\u03c5"
+                   ]
+    AnimeType:
+      type: string
+      enum:
+        - TV
+        - Movie
+        - OVA
+        - ONA
+        - Special
+        - Music
