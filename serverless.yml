@@ -1,0 +1,21 @@
+service:
+  name: adb-aws-lambda
+
+# Add the serverless-webpack plugin
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: YOUR-REGION-HERE
+  profile: adbAwsLambda
+
+functions:
+  dbLambda:
+    handler: src/handler.dbLambda
+    events:
+      - http:
+          method: get
+          path: "{metaDataProvider}/{id}"
