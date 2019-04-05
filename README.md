@@ -3,7 +3,7 @@ Stands for _anime database AWS lambda_. It lets you create an anime meta data RE
 
 **Check out the [OpenAPI specification](https://github.com/manami-project/adb-aws-lambda/blob/master/openapi.yaml).**
 
-# Prerequisite
+## Prerequisite
 * AWS account
 * node.js installed
   * npm installed
@@ -18,10 +18,10 @@ aws_secret_access_key=YOUR-SECRET-ACCESS-KEY
 region=YOUR-REGION-HERE
 ```
 
-# Usage
-## Deploy
+## Usage
+### Deploy
 1. Put your region in `serverless.yaml`
 2. Execute `sh start.sh`
 
-## Tear down
+### Tear down
 1. Execute `sh teardown.sh`
